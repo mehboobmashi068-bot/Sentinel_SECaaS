@@ -1,9 +1,9 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig, loadEnv} from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
-export default defineConfig(({mode}) => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
     plugins: [react(), tailwindcss()],
@@ -17,9 +17,16 @@ export default defineConfig(({mode}) => {
       },
     },
     server: {
-      // HMR is disabled in this environment to ensure system stability.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: false,
     },
+    // ADD THIS PREVIEW BLOCK HERE
+    preview: {
+      host: true,
+      port: Number(process.env.PORT) || 3000,
+      allowedHosts: [
+        'sentinelsecaas-production.up.railway.app',
+        '.railway.app'
+      ]
+    }
   };
 });
