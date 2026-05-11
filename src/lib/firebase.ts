@@ -1,35 +1,27 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// These values match your Firebase project: reliable-security-43cce
+// Your existing Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "reliable-security-43cce.firebaseapp.com",
-  projectId: "reliable-security-43cce",
-  storageBucket: "reliable-security-43cce.firebasestorage.app",
-  messagingSenderId: "591456220366",
-  appId: "1:591456220366:web:866416972e38202957f12e"
+  authDomain: "reliable-security.firebaseapp.com",
+  projectId: "reliable-security",
+  storageBucket: "reliable-security.firebasestorage.app",
+  messagingSenderId: "532036786743",
+  appId: "1:532036786743:web:32a1087aba89cf2252fdb2"
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase once. 
+// This check prevents "Firebase: App named '[DEFAULT]' already exists" errors during HMR.
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-// Exporting these allows you to use them in your Login/Register pages
+// Single export declarations
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// Guard against missing API key to prevent hard crash
-const isFirebaseConfigured = !!firebaseConfig.apiKey && firebaseConfig.apiKey !== "";
+// Set custom parameters for Google Auth if needed (optional)
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-if (!isFirebaseConfigured) {
-  console.warn("[ FIREBASE ] Missing configuration. Please set VITE_FIREBASE_API_KEY in Settings.");
-}
-
-// Initialize Firebase
-const app = isFirebaseConfigured ? initializeApp(firebaseConfig) : null;
-export const auth = app ? getAuth(app) : null as any;
-export const db = app ? getFirestore(app) : null as any;
-export const googleProvider = new GoogleAuthProvider();
-
-export { isFirebaseConfigured };
+export default app;
