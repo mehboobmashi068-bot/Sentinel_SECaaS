@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-sentinel-bg: #000000;
+  --color-sentinel-blue: var(--theme-blue);
+  --color-sentinel-red: #ff3e3e;
+  --color-sentinel-green: #39ff14;
+  --color-sentinel-gray: #1a1a1a;
+  --color-sentinel-dark: #0a0a0a;
+}
+
+:root {
+  --theme-blue: #007fff;
+}
+
+.is-locked {
+  --theme-blue: #ff3e3e;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  body {
+    @apply bg-black text-[#007fff] antialiased font-mono;
+  }
+}
+
+.terminal-window {
+  @apply bg-black border border-[#1a1a1a] shadow-[0_0_20px_rgba(0,127,255,0.05)] overflow-hidden flex flex-col;
+}
+
+.terminal-header {
+  @apply flex items-center justify-between px-3 py-1.5 bg-[#0a0a0a] border-b border-[#1a1a1a] select-none;
+}
+
+.terminal-controls {
+  @apply flex gap-1.5;
+}
+
+.control-dot {
+  @apply w-2.5 h-2.5 rounded-full border border-white/5;
+}
+
+.control-dot.close { @apply bg-[#ff3e3e]; }
+.control-dot.min { @apply bg-[#f1c40f]; }
+.control-dot.max { @apply bg-[#2ecc71]; }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.blinking-cursor::after {
+  content: "_";
+  @apply animate-pulse ml-0.5;
+}
+
+.red-alert {
+  @apply border-sentinel-red shadow-[0_0_15px_rgba(255,62,62,0.4)] transition-all duration-300;
+}
+
+@keyframes pulse-red {
+  0% { background-color: rgba(255, 62, 62, 0); }
+  50% { background-color: rgba(255, 62, 62, 0.05); }
+  100% { background-color: rgba(255, 62, 62, 0); }
+}
+
+.red-alert-screen {
+  animation: pulse-red 2s infinite;
+}

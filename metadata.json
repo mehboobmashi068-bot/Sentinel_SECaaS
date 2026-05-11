@@ -1,0 +1,6 @@
+{
+  "name": "Sentinel_SECaaS",
+  "description": "Enterprise-grade Bank-Shield Security Engine with SQLite Fail-Safe Redundancy and local Risk Registry.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
